@@ -11,11 +11,25 @@ function LoginForm({ onLogin }) {
   };
 
   return (
-    <form onSubmit={manejarEnvio}>
-      <h3>Iniciar Sesión</h3>
-      <input name="correo" type="email" placeholder="Correo" onChange={manejarCambio} required />
-      <input name="clave" type="password" placeholder="Contraseña" onChange={manejarCambio} required />
-      <button type="submit">Entrar a Teczone</button>
+    <form onSubmit={manejarEnvio} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+      <h3 style={{ color: "white", textAlign: "center", margin: "0 0 10px 0" }}>Iniciar Sesión</h3>
+      <input 
+        className="input-cyber" 
+        name="correo" 
+        type="email" 
+        placeholder="Usuario / Correo" 
+        onChange={manejarCambio} 
+        required 
+      />
+      <input 
+        className="input-cyber" 
+        name="clave" 
+        type="password" 
+        placeholder="Contraseña" 
+        onChange={manejarCambio} 
+        required 
+      />
+      <button className="btn-cyber" type="submit">Autenticar</button>
     </form>
   );
 }
