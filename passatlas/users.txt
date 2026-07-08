@@ -1,0 +1,4 @@
+Rol	Correo	Contraseña
+Administrador	josue.durand@gmail.com	Josue2026
+Vendedor (botiquero)	vendedor@techzone.cl	Vendedor1
+Cliente	cliente@techzone.cl	Cliente1
