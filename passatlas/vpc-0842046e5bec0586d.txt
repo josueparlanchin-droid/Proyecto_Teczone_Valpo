@@ -1,0 +1,8 @@
+vpc-0842046e5bec0586d
+
+nombre seguridad: SG-Windows
+
+propietario: 054885598341
+
+id de grupo de seguridad: sg-0e6e313727da1c680
+

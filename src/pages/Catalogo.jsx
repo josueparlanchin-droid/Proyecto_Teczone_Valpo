@@ -82,6 +82,7 @@ function Catalogo() {
               productos.map(prod => (
                 <div key={prod._id} style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", width: "250px", boxShadow: "0 2px 5px rgba(0,0,0,0.1)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                   <div>
+                    {prod.imagen && <img src={prod.imagen} alt={prod.nombre} style={{ width: "100%", height: "150px", objectFit: "cover", borderRadius: "4px", marginBottom: "10px" }} />}
                     <span style={{ fontSize: "12px", color: "#64748b", textTransform: "uppercase" }}>{prod.categoria}</span>
                     <h3 style={{ margin: "10px 0" }}>{prod.nombre}</h3>
                     {prod.descripcion && <p style={{ fontSize: "13px", color: "#64748b", margin: "5px 0" }}>{prod.descripcion}</p>}

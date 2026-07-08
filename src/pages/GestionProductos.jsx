@@ -5,7 +5,7 @@ import api from "../api/axios.js";
 function GestionProductos() {
   const navegar = useNavigate();
   const [productos, setProductos] = useState([]);
-  const [form, setForm] = useState({ nombre: "", precio: "", categoria: "Computadoras", descripcion: "", stock: 0 });
+  const [form, setForm] = useState({ nombre: "", precio: "", categoria: "Computadoras", descripcion: "", imagen: "", stock: 0 });
   const [editando, setEditando] = useState(null);
   const [error, setError] = useState("");
 
@@ -38,7 +38,7 @@ function GestionProductos() {
       } else {
         await api.post("/productos", form);
       }
-      setForm({ nombre: "", precio: "", categoria: "Computadoras", descripcion: "", stock: 0 });
+      setForm({ nombre: "", precio: "", categoria: "Computadoras", descripcion: "", imagen: "", stock: 0 });
       setEditando(null);
       cargarProductos();
     } catch (err) {
@@ -47,7 +47,7 @@ function GestionProductos() {
   };
 
   const editar = (p) => {
-    setForm({ nombre: p.nombre, precio: p.precio, categoria: p.categoria, descripcion: p.descripcion || "", stock: p.stock || 0 });
+    setForm({ nombre: p.nombre, precio: p.precio, categoria: p.categoria, descripcion: p.descripcion || "", imagen: p.imagen || "", stock: p.stock || 0 });
     setEditando(p._id);
   };
 
@@ -71,7 +71,7 @@ function GestionProductos() {
   };
 
   const cancelar = () => {
-    setForm({ nombre: "", precio: "", categoria: "Computadoras", descripcion: "", stock: 0 });
+    setForm({ nombre: "", precio: "", categoria: "Computadoras", descripcion: "", imagen: "", stock: 0 });
     setEditando(null);
   };
 
@@ -89,6 +89,7 @@ function GestionProductos() {
           {["Computadoras", "Teclados", "Componentes"].map(c => <option key={c}>{c}</option>)}
         </select>
         <input name="descripcion" placeholder="Descripción" value={form.descripcion} onChange={manejarCambio} className="input-cyber" style={{ flex: 1, minWidth: "200px" }} />
+        <input name="imagen" placeholder="URL de la imagen" value={form.imagen} onChange={manejarCambio} className="input-cyber" style={{ flex: 1, minWidth: "200px" }} />
         <input name="stock" type="number" placeholder="Stock" value={form.stock} onChange={manejarCambio} className="input-cyber" style={{ width: "100px" }} />
         <button type="submit" className="btn-cyber" style={{ width: "auto", padding: "12px 25px" }}>{editando ? "Actualizar" : "Guardar"}</button>
         {editando && <button type="button" onClick={cancelar} className="btn-fantasma" style={{ width: "auto", padding: "12px 25px" }}>Cancelar</button>}
@@ -105,6 +106,7 @@ function GestionProductos() {
             border: p.activo === false ? "1px solid #ef4444" : "1px solid #0ea5e9",
             opacity: p.activo === false ? 0.6 : 1,
           }}>
+            {p.imagen && <img src={p.imagen} alt={p.nombre} style={{ width: "100%", height: "140px", objectFit: "cover", borderRadius: "4px", marginBottom: "10px" }} />}
             <h4 style={{ margin: "0 0 5px", color: "#4ade80" }}>{p.nombre}</h4>
             <p style={{ margin: "3px 0", fontSize: "14px", color: "#94a3b8" }}>{p.categoria} · {p.precio}</p>
             {p.descripcion && <p style={{ margin: "3px 0", fontSize: "13px", color: "#cbd5e1" }}>{p.descripcion}</p>}

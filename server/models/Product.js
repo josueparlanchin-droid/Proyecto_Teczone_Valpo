@@ -5,6 +5,7 @@ const productSchema = new mongoose.Schema({
   precio: { type: String, required: true },
   categoria: { type: String, required: true },
   descripcion: { type: String, default: "" },
+  imagen: { type: String, default: "" },
   stock: { type: Number, default: 0 },
   activo: { type: Boolean, default: true },
 }, { timestamps: true });
