@@ -14,10 +14,11 @@ function Login() {
       localStorage.setItem("token", data.token);
       localStorage.setItem("refreshToken", data.refreshToken);
       localStorage.setItem("usuario", JSON.stringify(data.usuario));
-      if (data.usuario.rol === "cliente") {
-        navegar("/catalogo");
-      } else {
+
+      if (data.usuario.rol === "administrador" || data.usuario.rol === "botiquero") {
         navegar("/dashboard");
+      } else {
+        navegar("/catalogo");
       }
     } catch (err) {
       setError(err.response?.data?.mensaje || "Error al iniciar sesión");

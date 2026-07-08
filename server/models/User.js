@@ -4,6 +4,8 @@ import bcrypt from "bcryptjs";
 const roles = ["visita", "cliente", "botiquero", "administrador"];
 
 const userSchema = new mongoose.Schema({
+  nombre: { type: String, default: "" },
+  apellido: { type: String, default: "" },
   correo: {
     type: String,
     required: true,

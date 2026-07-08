@@ -8,9 +8,9 @@ dns.setServers(["8.8.8.8", "8.8.4.4"]);
 import User from "./models/User.js";
 
 const usuariosBase = [
-  { correo: "josue.durand@gmail.com", clave: "Josue2026", rol: "administrador" },
-  { correo: "vendedor@techzone.cl", clave: "Vendedor1", rol: "botiquero" },
-  { correo: "cliente@techzone.cl", clave: "Cliente1", rol: "cliente" },
+  { nombre: "Josue", apellido: "Durand", correo: "josue.durand@gmail.com", clave: "Josue2026", rol: "administrador" },
+  { nombre: "Vendedor", apellido: "TechZone", correo: "vendedor@techzone.cl", clave: "Vendedor1", rol: "botiquero" },
+  { nombre: "Cliente", apellido: "TechZone", correo: "cliente@techzone.cl", clave: "Cliente1", rol: "cliente" },
 ];
 
 async function seed() {

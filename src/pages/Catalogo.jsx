@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios.js";
+import { useCarrito } from "../context/CarritoContext.jsx";
 
 function Catalogo() {
   const navegar = useNavigate();
+  const { agregar, totalItems } = useCarrito();
   const [categoriaActiva, setCategoriaActiva] = useState("Todas");
   const [busqueda, setBusqueda] = useState("");
   const [productos, setProductos] = useState([]);
@@ -34,7 +36,7 @@ function Catalogo() {
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", backgroundColor: "#f1f5f9", fontFamily: "sans-serif" }}>
 
       <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "15px 30px", backgroundColor: "#0f172a", color: "white" }}>
-        <h2 style={{ margin: 0, color: "#4ade80", cursor: "pointer" }} onClick={() => navegar("/dashboard")}>Teczone</h2>
+        <h2 style={{ margin: 0, color: "#4ade80", cursor: "pointer" }} onClick={() => navegar("/catalogo")}>Teczone</h2>
         <input
           type="text"
           placeholder="Buscar productos..."
@@ -42,10 +44,18 @@ function Catalogo() {
           onChange={(e) => setBusqueda(e.target.value)}
           style={{ width: "300px", padding: "8px", borderRadius: "5px", border: "none" }}
         />
-        <div style={{ display: "flex", gap: "10px" }}>
+        <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+          <button onClick={() => navegar("/carrito")} style={{ position: "relative", padding: "8px 12px", backgroundColor: "transparent", color: "white", border: "1px solid #4ade80", borderRadius: "5px", cursor: "pointer", fontSize: "18px" }}>
+            🛒
+            {totalItems > 0 && (
+              <span style={{ position: "absolute", top: "-5px", right: "-5px", backgroundColor: "#ef4444", color: "white", borderRadius: "50%", padding: "2px 6px", fontSize: "11px", fontWeight: "bold" }}>
+                {totalItems}
+              </span>
+            )}
+          </button>
           {estaLogueado ? (
             <button onClick={() => navegar("/dashboard")} style={{ padding: "8px 15px", backgroundColor: "#4ade80", color: "#0f172a", border: "none", borderRadius: "5px", cursor: "pointer", fontWeight: "bold" }}>
-              Panel
+              {usuario.nombre || "Panel"}
             </button>
           ) : (
             <button onClick={() => navegar("/login")} style={{ padding: "8px 15px", backgroundColor: "#0ea5e9", color: "white", border: "none", borderRadius: "5px", cursor: "pointer" }}>
@@ -89,7 +99,7 @@ function Catalogo() {
                     <p style={{ fontSize: "20px", fontWeight: "bold", color: "#4ade80", margin: "10px 0" }}>{prod.precio}</p>
                     <p style={{ fontSize: "12px", color: "#94a3b8" }}>Stock: {prod.stock}</p>
                   </div>
-                  <button style={{ width: "100%", padding: "10px", backgroundColor: "#0f172a", color: "white", border: "none", borderRadius: "5px", cursor: "pointer" }}>
+                  <button onClick={() => agregar(prod)} style={{ width: "100%", padding: "10px", backgroundColor: "#0f172a", color: "white", border: "none", borderRadius: "5px", cursor: "pointer" }}>
                     Añadir al carrito
                   </button>
                 </div>

@@ -14,8 +14,8 @@ function Registro() {
       localStorage.setItem("token", data.token);
       localStorage.setItem("refreshToken", data.refreshToken);
       localStorage.setItem("usuario", JSON.stringify(data.usuario));
-      alert("¡Registro exitoso!");
-      navegar("/dashboard");
+      alert(`¡Bienvenido ${data.usuario.nombre}!`);
+      navegar("/catalogo");
     } catch (err) {
       setError(err.response?.data?.mensaje || "Error al registrarse");
     }

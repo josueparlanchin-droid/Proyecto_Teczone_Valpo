@@ -8,7 +8,7 @@ const SECRETO = process.env.JWT_SECRET || "techzone_valpo_secret_2026";
 
 router.post("/registro", async (req, res) => {
   try {
-    const { correo, clave } = req.body;
+    const { nombre, apellido, correo, clave } = req.body;
 
     if (!correo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
       return res.status(400).json({ mensaje: "Formato de correo inválido" });
@@ -22,7 +22,7 @@ router.post("/registro", async (req, res) => {
       return res.status(400).json({ mensaje: "El correo ya está registrado" });
     }
 
-    const usuario = new User({ correo, clave, rol: "cliente" });
+    const usuario = new User({ nombre, apellido, correo, clave, rol: "cliente" });
     await usuario.save();
 
     const token = generarToken(usuario);
@@ -32,7 +32,7 @@ router.post("/registro", async (req, res) => {
       mensaje: "Usuario registrado exitosamente",
       token,
       refreshToken,
-      usuario: { id: usuario._id, correo: usuario.correo, rol: usuario.rol },
+      usuario: { id: usuario._id, nombre: usuario.nombre, apellido: usuario.apellido, correo: usuario.correo, rol: usuario.rol },
     });
   } catch (error) {
     res.status(500).json({ mensaje: "Error al registrar", error: error.message });
@@ -60,7 +60,7 @@ router.post("/login", async (req, res) => {
       mensaje: "Inicio de sesión exitoso",
       token,
       refreshToken,
-      usuario: { id: usuario._id, correo: usuario.correo, rol: usuario.rol },
+      usuario: { id: usuario._id, nombre: usuario.nombre, apellido: usuario.apellido, correo: usuario.correo, rol: usuario.rol },
     });
   } catch (error) {
     res.status(500).json({ mensaje: "Error al iniciar sesión", error: error.message });
