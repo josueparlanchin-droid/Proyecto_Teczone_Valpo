@@ -1,9 +1,11 @@
 import express from "express";
 import cors from "cors";
+import swaggerUi from "swagger-ui-express";
 import { conectarDB } from "./config/db.js";
 import authRoutes from "./routes/auth.js";
 import productRoutes from "./routes/products.js";
 import usuarioRoutes from "./routes/usuarios.js";
+import swaggerSpec from "./config/swagger.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,6 +17,7 @@ app.get("/", (_req, res) => {
   res.json({
     mensaje: "API TechZone Valpo",
     version: "1.0.0",
+    documentacion: "/api/docs",
     endpoints: [
       "GET  /api/health",
       "POST /api/registro",
@@ -34,6 +37,7 @@ app.get("/", (_req, res) => {
   });
 });
 
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api", authRoutes);
 app.use("/api/productos", productRoutes);
 app.use("/api/usuarios", usuarioRoutes);

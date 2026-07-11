@@ -6,6 +6,41 @@ import { verificarToken, generarToken, generarRefreshToken } from "../middleware
 const router = Router();
 const SECRETO = process.env.JWT_SECRET || "techzone_valpo_secret_2026";
 
+/**
+ * @swagger
+ * /api/registro:
+ *   post:
+ *     tags: [Autenticación]
+ *     summary: Registrar un nuevo usuario
+ *     description: Crea una cuenta nueva con rol "cliente" por defecto.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [correo, clave]
+ *             properties:
+ *               nombre:
+ *                 type: string
+ *                 example: "Juan"
+ *               apellido:
+ *                 type: string
+ *                 example: "Pérez"
+ *               correo:
+ *                 type: string
+ *                 format: email
+ *                 example: "juan@correo.cl"
+ *               clave:
+ *                 type: string
+ *                 minLength: 8
+ *                 example: "MiClave123"
+ *     responses:
+ *       201:
+ *         description: Usuario registrado exitosamente
+ *       400:
+ *         description: Correo inválido, clave muy corta o correo ya registrado
+ */
 router.post("/registro", async (req, res) => {
   try {
     const { nombre, apellido, correo, clave } = req.body;
@@ -39,6 +74,34 @@ router.post("/registro", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /api/login:
+ *   post:
+ *     tags: [Autenticación]
+ *     summary: Iniciar sesión
+ *     description: Valida correo y contraseña, devuelve token JWT y refresh token.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [correo, clave]
+ *             properties:
+ *               correo:
+ *                 type: string
+ *                 format: email
+ *                 example: "juan@correo.cl"
+ *               clave:
+ *                 type: string
+ *                 example: "MiClave123"
+ *     responses:
+ *       200:
+ *         description: Inicio de sesión exitoso
+ *       401:
+ *         description: Credenciales incorrectas
+ */
 router.post("/login", async (req, res) => {
   try {
     const { correo, clave } = req.body;
@@ -67,6 +130,30 @@ router.post("/login", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /api/refresh:
+ *   post:
+ *     tags: [Autenticación]
+ *     summary: Renovar token de acceso
+ *     description: Emite un nuevo par de tokens (access + refresh) usando un refresh token válido.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [refreshToken]
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *                 description: Token de refresco obtenido al iniciar sesión
+ *     responses:
+ *       200:
+ *         description: Tokens renovados exitosamente
+ *       401:
+ *         description: Refresh token inválido o expirado
+ */
 router.post("/refresh", async (req, res) => {
   try {
     const { refreshToken } = req.body;
@@ -89,6 +176,21 @@ router.post("/refresh", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /api/perfil:
+ *   get:
+ *     tags: [Autenticación]
+ *     summary: Obtener perfil del usuario autenticado
+ *     description: Retorna los datos del usuario actual (sin contraseña).
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Perfil del usuario
+ *       401:
+ *         description: Token requerido o inválido
+ */
 router.get("/perfil", verificarToken, async (req, res) => {
   try {
     const usuario = await User.findById(req.usuario.id).select("-clave");
