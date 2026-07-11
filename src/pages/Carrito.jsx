@@ -59,7 +59,7 @@ function Carrito() {
             <div className="carrito-total">
               <p className="carrito-total-texto">Total productos: {items.reduce((s, i) => s + i.cantidad, 0)}</p>
               <h2 className="carrito-total-precio">Total: {formatearPrecio(totalPrecio)}</h2>
-              <button className="carrito-pagar" aria-label="Proceder al pago">
+              <button className="carrito-pagar" aria-label="Proceder al pago" onClick={() => navegar("/checkout")}>
                 Proceder al pago
               </button>
             </div>

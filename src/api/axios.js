@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "https://proyecto-teczone-valpo.onrender.com/api",
+  baseURL: import.meta.env.VITE_API_URL || "/api",
 });
 
 api.interceptors.request.use((config) => {
@@ -24,7 +24,7 @@ api.interceptors.response.use(
           const { data } = await axios.post(
             import.meta.env.VITE_API_URL
               ? import.meta.env.VITE_API_URL + "/refresh"
-              : "https://proyecto-teczone-valpo.onrender.com/api/refresh",
+              : "/api/refresh",
             { refreshToken }
           );
           localStorage.setItem("token", data.token);

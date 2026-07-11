@@ -6,6 +6,9 @@ import Catalogo from "./pages/Catalogo.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import GestionProductos from "./pages/GestionProductos.jsx";
 import Carrito from "./pages/Carrito.jsx";
+import Checkout from "./pages/Checkout.jsx";
+import PedidoConfirmado from "./pages/PedidoConfirmado.jsx";
+import MisPedidos from "./pages/MisPedidos.jsx";
 import Usuarios from "./pages/Usuarios.jsx";
 
 function App() {
@@ -17,6 +20,9 @@ function App() {
         <Route path="/registro" element={<Registro />} />
         <Route path="/catalogo" element={<ProtectedRoute><Catalogo /></ProtectedRoute>} />
         <Route path="/carrito" element={<ProtectedRoute><Carrito /></ProtectedRoute>} />
+        <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+        <Route path="/pedido-confirmado" element={<ProtectedRoute><PedidoConfirmado /></ProtectedRoute>} />
+        <Route path="/mis-pedidos" element={<ProtectedRoute><MisPedidos /></ProtectedRoute>} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/gestion-productos" element={<ProtectedRoute><GestionProductos /></ProtectedRoute>} />
         <Route path="/usuarios" element={<ProtectedRoute><Usuarios /></ProtectedRoute>} />

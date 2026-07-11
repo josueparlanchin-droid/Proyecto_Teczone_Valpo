@@ -5,6 +5,7 @@ import { conectarDB } from "./config/db.js";
 import authRoutes from "./routes/auth.js";
 import productRoutes from "./routes/products.js";
 import usuarioRoutes from "./routes/usuarios.js";
+import pedidoRoutes from "./routes/pedidos.js";
 import swaggerSpec from "./config/swagger.js";
 
 const app = express();
@@ -33,6 +34,11 @@ app.get("/", (_req, res) => {
       "GET  /api/usuarios (admin)",
       "PATCH /api/usuarios/:id/rol (admin)",
       "PATCH /api/usuarios/:id/activo (admin)",
+      "POST /api/pedidos (autenticado)",
+      "GET  /api/pedidos/mis (autenticado)",
+      "GET  /api/pedidos/admin (admin)",
+      "GET  /api/pedidos/:id (propietario/admin)",
+      "PATCH /api/pedidos/:id/estado (admin)",
     ],
   });
 });
@@ -41,6 +47,7 @@ app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api", authRoutes);
 app.use("/api/productos", productRoutes);
 app.use("/api/usuarios", usuarioRoutes);
+app.use("/api/pedidos", pedidoRoutes);
 
 app.get("/api/health", (_req, res) => {
   res.json({ estado: "ok", timestamp: new Date().toISOString() });
