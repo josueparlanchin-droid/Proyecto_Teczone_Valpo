@@ -7,7 +7,11 @@ import productRoutes from "./routes/products.js";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+const originsPermitidas = process.env.CORS_ORIGINS
+  ? process.env.CORS_ORIGINS.split(",")
+  : ["http://localhost:5173", "http://localhost:3000"];
+
+app.use(cors({ origin: originsPermitidas, credentials: true }));
 app.use(express.json());
 
 app.get("/", (_req, res) => {
