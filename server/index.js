@@ -11,7 +11,10 @@ const originsPermitidas = process.env.CORS_ORIGINS
   ? process.env.CORS_ORIGINS.split(",")
   : ["http://localhost:5173", "http://localhost:3000"];
 
-app.use(cors({ origin: originsPermitidas, credentials: true }));
+app.use(cors({
+  origin: process.env.CORS_ORIGINS === "*" ? true : originsPermitidas,
+  credentials: true,
+}));
 app.use(express.json());
 
 app.get("/", (_req, res) => {
