@@ -46,11 +46,11 @@ function Dashboard() {
     <div className="fondo-tecnico" style={{ justifyContent: "flex-start", paddingTop: "60px" }}>
       <h1 className="titulo-neon" style={{ fontSize: "2rem" }}>Panel de Control</h1>
       <div className="caja-cyber" style={{ maxWidth: "450px" }}>
-        <p style={{ color: "#38bdf8", textAlign: "center", margin: 0 }}>
-          {usuario.correo} · <span style={{ color: "#4ade80", textTransform: "uppercase" }}>{rol}</span>
+        <p className="dashboard-rol">
+          {usuario.correo} · <span className="dashboard-rol-badge">{rol}</span>
         </p>
-        <hr style={{ borderColor: "#0ea5e9", width: "100%" }} />
-        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        <hr className="dashboard-divider" />
+        <div className="dashboard-botones">
           {opciones.map((op) => (
             <button key={op.path} className="btn-cyber" onClick={() => navegar(op.path)}>
               {op.label}

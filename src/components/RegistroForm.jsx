@@ -33,9 +33,9 @@ function RegistroForm({ onGuardar }) {
   };
 
   return (
-    <form onSubmit={manejarEnvio} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
-      <h3 style={{ color: "white", textAlign: "center", margin: "0 0 10px 0" }}>Registro de Sistema</h3>
-      <div style={{ display: "flex", gap: "10px" }}>
+    <form onSubmit={manejarEnvio} className="auth-form" aria-label="Formulario de registro">
+      <h3 className="auth-form-titulo">Registro de Sistema</h3>
+      <div className="auth-form-fila">
         <input
           className="input-cyber"
           name="nombre"
@@ -43,7 +43,7 @@ function RegistroForm({ onGuardar }) {
           value={form.nombre}
           onChange={manejarCambio}
           required
-          style={{ flex: 1 }}
+          aria-label="Nombre"
         />
         <input
           className="input-cyber"
@@ -52,7 +52,7 @@ function RegistroForm({ onGuardar }) {
           value={form.apellido}
           onChange={manejarCambio}
           required
-          style={{ flex: 1 }}
+          aria-label="Apellido"
         />
       </div>
       <input
@@ -63,6 +63,8 @@ function RegistroForm({ onGuardar }) {
         value={form.correo}
         onChange={manejarCambio}
         required
+        aria-label="Correo electrónico"
+        autoComplete="email"
       />
       <input
         className="input-cyber"
@@ -72,9 +74,11 @@ function RegistroForm({ onGuardar }) {
         value={form.clave}
         onChange={manejarCambio}
         required
+        aria-label="Contraseña"
+        autoComplete="new-password"
       />
 
-      {error && <p style={{ color: "#ef4444", fontSize: "13px", margin: "0", textAlign: "center" }}>{error}</p>}
+      {error && <p className="form-error">{error}</p>}
 
       <button className="btn-cyber" type="submit">Registrar</button>
     </form>

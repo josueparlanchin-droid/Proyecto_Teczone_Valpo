@@ -26,7 +26,7 @@ function Registro() {
       <h1 className="titulo-neon">Nuevo Recluta</h1>
       <div className="caja-cyber">
         <RegistroForm onGuardar={guardarUsuario} />
-        {error && <p style={{ color: "#ef4444", fontSize: "13px", textAlign: "center", margin: 0 }}>{error}</p>}
+        {error && <p className="form-error">{error}</p>}
         <button className="btn-fantasma" onClick={() => navegar("/login")}>
           Ya tengo acceso
         </button>

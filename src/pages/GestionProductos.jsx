@@ -76,49 +76,46 @@ function GestionProductos() {
   };
 
   return (
-    <div style={{ padding: "30px", fontFamily: "sans-serif", backgroundColor: "#0f172a", minHeight: "100vh", color: "white" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <h2 style={{ color: "#4ade80" }}>{editando ? "Editar Producto" : "Agregar Producto"}</h2>
-        <button onClick={() => navegar("/dashboard")} className="btn-fantasma" style={{ width: "auto", padding: "8px 20px" }}>Volver</button>
+    <div className="gestion-pagina">
+      <div className="gestion-top">
+        <h2 className="gestion-titulo">{editando ? "Editar Producto" : "Agregar Producto"}</h2>
+        <button onClick={() => navegar("/dashboard")} className="gestion-volver">Volver</button>
       </div>
 
-      <form onSubmit={guardar} style={{ display: "flex", gap: "10px", flexWrap: "wrap", margin: "20px 0", padding: "20px", backgroundColor: "#1e293b", borderRadius: "8px" }}>
-        <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={manejarCambio} required className="input-cyber" style={{ flex: 1, minWidth: "200px" }} />
-        <input name="precio" placeholder="Precio (ej: $150.000)" value={form.precio} onChange={manejarCambio} required className="input-cyber" style={{ width: "150px" }} />
-        <select name="categoria" value={form.categoria} onChange={manejarCambio} className="input-cyber" style={{ width: "180px" }}>
+      <form onSubmit={guardar} className="gestion-form">
+        <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={manejarCambio} required className="input-cyber" />
+        <input name="precio" placeholder="Precio (ej: $150.000)" value={form.precio} onChange={manejarCambio} required className="input-cyber" />
+        <select name="categoria" value={form.categoria} onChange={manejarCambio} className="input-cyber">
           {["Computadoras", "Teclados", "Componentes"].map(c => <option key={c}>{c}</option>)}
         </select>
-        <input name="descripcion" placeholder="Descripción" value={form.descripcion} onChange={manejarCambio} className="input-cyber" style={{ flex: 1, minWidth: "200px" }} />
-        <input name="imagen" placeholder="URL de la imagen" value={form.imagen} onChange={manejarCambio} className="input-cyber" style={{ flex: 1, minWidth: "200px" }} />
-        <input name="stock" type="number" placeholder="Stock" value={form.stock} onChange={manejarCambio} className="input-cyber" style={{ width: "100px" }} />
-        <button type="submit" className="btn-cyber" style={{ width: "auto", padding: "12px 25px" }}>{editando ? "Actualizar" : "Guardar"}</button>
-        {editando && <button type="button" onClick={cancelar} className="btn-fantasma" style={{ width: "auto", padding: "12px 25px" }}>Cancelar</button>}
+        <input name="descripcion" placeholder="Descripción" value={form.descripcion} onChange={manejarCambio} className="input-cyber" />
+        <input name="imagen" placeholder="URL de la imagen" value={form.imagen} onChange={manejarCambio} className="input-cyber" />
+        <input name="stock" type="number" placeholder="Stock" value={form.stock} onChange={manejarCambio} className="input-cyber" />
+        <div className="gestion-form-botones">
+          <button type="submit" className="btn-cyber" style={{ width: "auto", padding: "12px 25px" }}>{editando ? "Actualizar" : "Guardar"}</button>
+          {editando && <button type="button" onClick={cancelar} className="btn-fantasma" style={{ width: "auto", padding: "12px 25px", marginTop: 0 }}>Cancelar</button>}
+        </div>
       </form>
 
-      {error && <p style={{ color: "#ef4444" }}>{error}</p>}
+      {error && <p className="gestion-error">{error}</p>}
 
-      <h3 style={{ color: "#38bdf8" }}>Productos</h3>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "15px" }}>
+      <h3 className="gestion-lista-titulo">Productos</h3>
+      <div className="gestion-grid">
         {productos.map((p) => (
-          <div key={p._id} style={{
-            backgroundColor: p.activo === false ? "#2d1b1b" : "#1e293b",
-            padding: "15px", borderRadius: "8px",
-            border: p.activo === false ? "1px solid #ef4444" : "1px solid #0ea5e9",
-            opacity: p.activo === false ? 0.6 : 1,
-          }}>
-            {p.imagen && <img src={p.imagen} alt={p.nombre} style={{ width: "100%", height: "140px", objectFit: "cover", borderRadius: "4px", marginBottom: "10px" }} />}
-            <h4 style={{ margin: "0 0 5px", color: "#4ade80" }}>{p.nombre}</h4>
-            <p style={{ margin: "3px 0", fontSize: "14px", color: "#94a3b8" }}>{p.categoria} · {p.precio}</p>
-            {p.descripcion && <p style={{ margin: "3px 0", fontSize: "13px", color: "#cbd5e1" }}>{p.descripcion}</p>}
-            <p style={{ margin: "3px 0", fontSize: "13px", color: "#94a3b8" }}>Stock: {p.stock}</p>
-            <div style={{ display: "flex", gap: "8px", marginTop: "10px" }}>
+          <div key={p._id} className={`gestion-card ${p.activo === false ? "inactiva" : ""}`}>
+            {p.imagen && <img src={p.imagen} alt={p.nombre} className="gestion-card-img" />}
+            <h4 className="gestion-card-nombre">{p.nombre}</h4>
+            <p className="gestion-card-meta">{p.categoria} · {p.precio}</p>
+            {p.descripcion && <p className="gestion-card-desc">{p.descripcion}</p>}
+            <p className="gestion-card-stock">Stock: {p.stock}</p>
+            <div className="gestion-card-acciones">
               {esAdmin && (
                 <>
-                  <button onClick={() => editar(p)} style={{ padding: "5px 12px", backgroundColor: "#0ea5e9", color: "white", border: "none", borderRadius: "4px", cursor: "pointer", fontSize: "13px" }}>Editar</button>
+                  <button onClick={() => editar(p)} className="gestion-btn-editar" aria-label={`Editar ${p.nombre}`}>Editar</button>
                   {p.activo !== false ? (
-                    <button onClick={() => eliminar(p._id)} style={{ padding: "5px 12px", backgroundColor: "#ef4444", color: "white", border: "none", borderRadius: "4px", cursor: "pointer", fontSize: "13px" }}>Desactivar</button>
+                    <button onClick={() => eliminar(p._id)} className="gestion-btn-desactivar" aria-label={`Desactivar ${p.nombre}`}>Desactivar</button>
                   ) : (
-                    <button onClick={() => reactivar(p._id)} style={{ padding: "5px 12px", backgroundColor: "#4ade80", color: "#0f172a", border: "none", borderRadius: "4px", cursor: "pointer", fontSize: "13px" }}>Reactivar</button>
+                    <button onClick={() => reactivar(p._id)} className="gestion-btn-reactivar" aria-label={`Reactivar ${p.nombre}`}>Reactivar</button>
                   )}
                 </>
               )}

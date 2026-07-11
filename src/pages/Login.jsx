@@ -30,7 +30,7 @@ function Login() {
       <h1 className="titulo-neon">Teczone Valpo</h1>
       <div className="caja-cyber">
         <LoginForm onLogin={iniciarSesion} />
-        {error && <p style={{ color: "#ef4444", fontSize: "13px", textAlign: "center", margin: 0 }}>{error}</p>}
+        {error && <p className="form-error">{error}</p>}
         <button className="btn-fantasma" onClick={() => navegar("/registro")}>
           Crear cuenta nueva
         </button>

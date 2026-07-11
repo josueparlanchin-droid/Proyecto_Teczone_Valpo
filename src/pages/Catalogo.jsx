@@ -10,6 +10,7 @@ function Catalogo() {
   const [busqueda, setBusqueda] = useState("");
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
+  const [sidebarAbierto, setSidebarAbierto] = useState(false);
 
   useEffect(() => {
     cargarProductos();
@@ -32,48 +33,59 @@ function Catalogo() {
   const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
   const estaLogueado = !!localStorage.getItem("token");
 
-  return (
-    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", backgroundColor: "#f1f5f9", fontFamily: "sans-serif" }}>
+  const seleccionarCategoria = (cat) => {
+    setCategoriaActiva(cat);
+    setSidebarAbierto(false);
+  };
 
-      <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "15px 30px", backgroundColor: "#0f172a", color: "white" }}>
-        <h2 style={{ margin: 0, color: "#4ade80", cursor: "pointer" }} onClick={() => navegar("/catalogo")}>Teczone</h2>
+  return (
+    <div className="catalogo-layout">
+
+      <header className="catalogo-header">
+        <h2 className="catalogo-logo" onClick={() => navegar("/catalogo")}>Teczone</h2>
+
+        <button className="catalogo-menu-btn" onClick={() => setSidebarAbierto(!sidebarAbierto)} aria-label="Abrir categorías">
+          ☰
+        </button>
+
         <input
           type="text"
           placeholder="Buscar productos..."
           value={busqueda}
           onChange={(e) => setBusqueda(e.target.value)}
-          style={{ width: "300px", padding: "8px", borderRadius: "5px", border: "none" }}
+          className="catalogo-buscar"
+          aria-label="Buscar productos"
         />
-        <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-          <button onClick={() => navegar("/carrito")} style={{ position: "relative", padding: "8px 12px", backgroundColor: "transparent", color: "white", border: "1px solid #4ade80", borderRadius: "5px", cursor: "pointer", fontSize: "18px" }}>
+        <div className="catalogo-header-acciones">
+          <button onClick={() => navegar("/carrito")} className="catalogo-carrito-btn" aria-label="Ver carrito">
             🛒
             {totalItems > 0 && (
-              <span style={{ position: "absolute", top: "-5px", right: "-5px", backgroundColor: "#ef4444", color: "white", borderRadius: "50%", padding: "2px 6px", fontSize: "11px", fontWeight: "bold" }}>
-                {totalItems}
-              </span>
+              <span className="catalogo-carrito-badge">{totalItems}</span>
             )}
           </button>
           {estaLogueado ? (
-            <button onClick={() => navegar("/dashboard")} style={{ padding: "8px 15px", backgroundColor: "#4ade80", color: "#0f172a", border: "none", borderRadius: "5px", cursor: "pointer", fontWeight: "bold" }}>
+            <button onClick={() => navegar("/dashboard")} className="catalogo-user-btn">
               {usuario.nombre || "Panel"}
             </button>
           ) : (
-            <button onClick={() => navegar("/login")} style={{ padding: "8px 15px", backgroundColor: "#0ea5e9", color: "white", border: "none", borderRadius: "5px", cursor: "pointer" }}>
+            <button onClick={() => navegar("/login")} className="catalogo-login-btn">
               Iniciar Sesión
             </button>
           )}
         </div>
       </header>
 
-      <div style={{ display: "flex", flex: 1 }}>
-        <aside style={{ width: "200px", backgroundColor: "#1e293b", color: "white", padding: "20px" }}>
-          <h3 style={{ borderBottom: "1px solid #334155", paddingBottom: "10px" }}>Categorías</h3>
-          <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "10px" }}>
+      {sidebarAbierto && <div className="catalogo-overlay" onClick={() => setSidebarAbierto(false)} />}
+
+      <div className="catalogo-cuerpo">
+        <aside className={`catalogo-sidebar ${sidebarAbierto ? "abierto" : ""}`}>
+          <h3 className="catalogo-sidebar-titulo">Categorías</h3>
+          <ul className="catalogo-sidebar-lista">
             {["Todas", "Computadoras", "Teclados", "Componentes"].map(cat => (
               <li key={cat}>
                 <button
-                  onClick={() => setCategoriaActiva(cat)}
-                  style={{ width: "100%", textAlign: "left", padding: "10px", background: categoriaActiva === cat ? "#4ade80" : "transparent", color: categoriaActiva === cat ? "#0f172a" : "white", border: "none", borderRadius: "5px", cursor: "pointer", fontWeight: "bold" }}
+                  onClick={() => seleccionarCategoria(cat)}
+                  className={`catalogo-cat-btn ${categoriaActiva === cat ? "activa" : ""}`}
                 >
                   {cat}
                 </button>
@@ -82,30 +94,32 @@ function Catalogo() {
           </ul>
         </aside>
 
-        <main style={{ flex: 1, padding: "30px" }}>
-          <h2 style={{ color: "#0f172a", marginTop: 0 }}>Catálogo {categoriaActiva !== "Todas" && `: ${categoriaActiva}`}</h2>
+        <main className="catalogo-main">
+          <h2 className="catalogo-titulo">
+            Catálogo {categoriaActiva !== "Todas" && `: ${categoriaActiva}`}
+          </h2>
 
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+          <div className="catalogo-grid">
             {cargando ? (
-              <p>Cargando productos...</p>
+              <p className="catalogo-vacio">Cargando productos...</p>
             ) : productos.length > 0 ? (
               productos.map(prod => (
-                <div key={prod._id} style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", width: "250px", boxShadow: "0 2px 5px rgba(0,0,0,0.1)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                <div key={prod._id} className="catalogo-card">
                   <div>
-                    {prod.imagen && <img src={prod.imagen} alt={prod.nombre} style={{ width: "100%", height: "150px", objectFit: "cover", borderRadius: "4px", marginBottom: "10px" }} />}
-                    <span style={{ fontSize: "12px", color: "#64748b", textTransform: "uppercase" }}>{prod.categoria}</span>
-                    <h3 style={{ margin: "10px 0" }}>{prod.nombre}</h3>
-                    {prod.descripcion && <p style={{ fontSize: "13px", color: "#64748b", margin: "5px 0" }}>{prod.descripcion}</p>}
-                    <p style={{ fontSize: "20px", fontWeight: "bold", color: "#4ade80", margin: "10px 0" }}>{prod.precio}</p>
-                    <p style={{ fontSize: "12px", color: "#94a3b8" }}>Stock: {prod.stock}</p>
+                    {prod.imagen && <img src={prod.imagen} alt={prod.nombre} className="catalogo-card-img" />}
+                    <span className="catalogo-card-cat">{prod.categoria}</span>
+                    <h3 className="catalogo-card-nombre">{prod.nombre}</h3>
+                    {prod.descripcion && <p className="catalogo-card-desc">{prod.descripcion}</p>}
+                    <p className="catalogo-card-precio">{prod.precio}</p>
+                    <p className="catalogo-card-stock">Stock: {prod.stock}</p>
                   </div>
-                  <button onClick={() => agregar(prod)} style={{ width: "100%", padding: "10px", backgroundColor: "#0f172a", color: "white", border: "none", borderRadius: "5px", cursor: "pointer" }}>
+                  <button onClick={() => agregar(prod)} className="catalogo-card-btn" aria-label={`Agregar ${prod.nombre} al carrito`}>
                     Añadir al carrito
                   </button>
                 </div>
               ))
             ) : (
-              <p>No se encontraron productos para "{busqueda}".</p>
+              <p className="catalogo-vacio">No se encontraron productos para "{busqueda}".</p>
             )}
           </div>
         </main>
