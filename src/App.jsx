@@ -6,6 +6,7 @@ import Catalogo from "./pages/Catalogo.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import GestionProductos from "./pages/GestionProductos.jsx";
 import Carrito from "./pages/Carrito.jsx";
+import Usuarios from "./pages/Usuarios.jsx";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/carrito" element={<ProtectedRoute><Carrito /></ProtectedRoute>} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/gestion-productos" element={<ProtectedRoute><GestionProductos /></ProtectedRoute>} />
+        <Route path="/usuarios" element={<ProtectedRoute><Usuarios /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );

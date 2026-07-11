@@ -3,6 +3,7 @@ import cors from "cors";
 import { conectarDB } from "./config/db.js";
 import authRoutes from "./routes/auth.js";
 import productRoutes from "./routes/products.js";
+import usuarioRoutes from "./routes/usuarios.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,12 +27,16 @@ app.get("/", (_req, res) => {
       "PUT  /api/productos/:id (admin)",
       "DELETE /api/productos/:id (admin soft delete)",
       "GET  /api/productos/admin (admin)",
+      "GET  /api/usuarios (admin)",
+      "PATCH /api/usuarios/:id/rol (admin)",
+      "PATCH /api/usuarios/:id/activo (admin)",
     ],
   });
 });
 
 app.use("/api", authRoutes);
 app.use("/api/productos", productRoutes);
+app.use("/api/usuarios", usuarioRoutes);
 
 app.get("/api/health", (_req, res) => {
   res.json({ estado: "ok", timestamp: new Date().toISOString() });

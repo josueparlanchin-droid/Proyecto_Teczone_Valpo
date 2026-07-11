@@ -8,9 +8,7 @@ dns.setServers(["8.8.8.8", "8.8.4.4"]);
 import User from "./models/User.js";
 
 const usuariosBase = [
-  { nombre: "Josue", apellido: "Durand", correo: "josue.durand@gmail.com", clave: "Josue2026", rol: "administrador" },
-  { nombre: "Vendedor", apellido: "TechZone", correo: "vendedor@techzone.cl", clave: "Vendedor1", rol: "botiquero" },
-  { nombre: "Cliente", apellido: "TechZone", correo: "cliente@techzone.cl", clave: "Cliente1", rol: "cliente" },
+  { nombre: process.env.SEED_ADMIN_NAME || "Admin", apellido: "", correo: process.env.SEED_ADMIN_EMAIL || "admin@techzone.cl", clave: process.env.SEED_ADMIN_PASS || "CHANGE_ME", rol: "administrador" },
 ];
 
 async function seed() {
@@ -36,7 +34,7 @@ async function seed() {
 
     const userCount = await User.countDocuments();
     console.log(`\n👤 Total usuarios: ${userCount}`);
-    console.log("📦 Catálogo vacío — el admin agregará productos desde la UI");
+    console.log("📦 Los usuarios se gestionan desde el panel admin");
   } catch (error) {
     console.error("❌ Error:", error.message);
   } finally {
