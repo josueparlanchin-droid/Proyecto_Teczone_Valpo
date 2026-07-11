@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Registro from "./pages/Registro.jsx";
 import Login from "./pages/Login.jsx";
 import Catalogo from "./pages/Catalogo.jsx";
@@ -10,13 +11,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Catalogo />} />
-        <Route path="/registro" element={<Registro />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/catalogo" element={<Catalogo />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/gestion-productos" element={<GestionProductos />} />
-        <Route path="/carrito" element={<Carrito />} />
+        <Route path="/registro" element={<Registro />} />
+        <Route path="/catalogo" element={<ProtectedRoute><Catalogo /></ProtectedRoute>} />
+        <Route path="/carrito" element={<ProtectedRoute><Carrito /></ProtectedRoute>} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/gestion-productos" element={<ProtectedRoute><GestionProductos /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );

@@ -13,7 +13,6 @@ function GestionProductos() {
   const esAdmin = usuario.rol === "administrador";
 
   useEffect(() => {
-    if (!usuario.rol) return navegar("/login");
     cargarProductos();
   }, []);
 

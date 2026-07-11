@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const menus = {
@@ -21,23 +21,12 @@ const menus = {
 
 function Dashboard() {
   const navegar = useNavigate();
-  const [usuario, setUsuario] = useState(null);
-
-  useEffect(() => {
-    const stored = localStorage.getItem("usuario");
-    if (!stored) {
-      navegar("/login");
-      return;
-    }
-    setUsuario(JSON.parse(stored));
-  }, []);
+  const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
 
   const cerrarSesion = () => {
     localStorage.clear();
     navegar("/login");
   };
-
-  if (!usuario) return null;
 
   const rol = usuario.rol;
   const opciones = menus[rol] || menus.visita;
