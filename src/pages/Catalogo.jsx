@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios.js";
 import { useCarrito } from "../context/CarritoContext.jsx";
+import ProfileMenu from "../components/ProfileMenu.jsx";
 
 function Catalogo() {
   const navegar = useNavigate();
@@ -64,9 +65,7 @@ function Catalogo() {
             )}
           </button>
           {estaLogueado ? (
-            <button onClick={() => navegar("/dashboard")} className="catalogo-user-btn">
-              {usuario.nombre || "Panel"}
-            </button>
+            <ProfileMenu />
           ) : (
             <button onClick={() => navegar("/login")} className="catalogo-login-btn">
               Iniciar Sesión

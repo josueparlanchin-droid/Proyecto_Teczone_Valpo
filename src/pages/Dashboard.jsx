@@ -10,9 +10,11 @@ const menus = {
   botiquero: [
     { label: "Catálogo", path: "/catalogo" },
     { label: "Agregar Producto", path: "/gestion-productos" },
+    { label: "Mis Compras", path: "/mis-pedidos" },
   ],
   cliente: [
     { label: "Catálogo", path: "/catalogo" },
+    { label: "Mis Compras", path: "/mis-pedidos" },
   ],
   visita: [
     { label: "Catálogo", path: "/catalogo" },
