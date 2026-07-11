@@ -85,7 +85,7 @@ function GestionProductos() {
         <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={manejarCambio} required className="input-cyber" />
         <input name="precio" placeholder="Precio (ej: $150.000)" value={form.precio} onChange={manejarCambio} required className="input-cyber" />
         <select name="categoria" value={form.categoria} onChange={manejarCambio} className="input-cyber">
-          {["Computadoras", "Teclados", "Componentes"].map(c => <option key={c}>{c}</option>)}
+          {["Computadoras", "Teclados", "Mouse", "Componentes", "Monitores", "Audio", "Accesorios", "Smartphones", "Wearables", "Audifonos", "Cargadores"].map(c => <option key={c}>{c}</option>)}
         </select>
         <input name="descripcion" placeholder="Descripción" value={form.descripcion} onChange={manejarCambio} className="input-cyber" />
         <input name="imagen" placeholder="URL de la imagen" value={form.imagen} onChange={manejarCambio} className="input-cyber" />

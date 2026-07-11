@@ -50,7 +50,7 @@ const options = {
             _id: { type: "string", description: "ID único del producto" },
             nombre: { type: "string", description: "Nombre del producto" },
             precio: { type: "string", description: "Precio (ej: $150.000)" },
-            categoria: { type: "string", enum: ["Computadoras", "Teclados", "Mouse", "Audio", "Componentes", "Accesorios", "Monitores"], description: "Categoría" },
+            categoria: { type: "string", enum: ["Computadoras", "Teclados", "Mouse", "Componentes", "Monitores", "Audio", "Accesorios", "Smartphones", "Wearables", "Audifonos", "Cargadores"], description: "Categoría" },
             descripcion: { type: "string", description: "Descripción del producto" },
             imagen: { type: "string", description: "URL de la imagen" },
             stock: { type: "number", description: "Cantidad en stock" },

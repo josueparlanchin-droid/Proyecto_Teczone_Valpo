@@ -432,6 +432,17 @@ body, html {
   background-color: #1e293b;
 }
 
+.catalogo-card-btn.catalogo-card-agotado {
+  background-color: #64748b;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.catalogo-card-btn.catalogo-card-agotado:hover {
+  background-color: #64748b;
+  box-shadow: none;
+}
+
 .catalogo-vacio {
   color: #64748b;
   grid-column: 1 / -1;

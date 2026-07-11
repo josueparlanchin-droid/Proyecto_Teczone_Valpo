@@ -80,7 +80,7 @@ function Catalogo() {
         <aside className={`catalogo-sidebar ${sidebarAbierto ? "abierto" : ""}`}>
           <h3 className="catalogo-sidebar-titulo">Categorías</h3>
           <ul className="catalogo-sidebar-lista">
-            {["Todas", "Computadoras", "Teclados", "Componentes"].map(cat => (
+            {["Todas", "Computadoras", "Teclados", "Mouse", "Componentes", "Monitores", "Audio", "Accesorios", "Smartphones", "Wearables", "Audifonos", "Cargadores"].map(cat => (
               <li key={cat}>
                 <button
                   onClick={() => seleccionarCategoria(cat)}
@@ -112,8 +112,13 @@ function Catalogo() {
                     <p className="catalogo-card-precio">{prod.precio}</p>
                     <p className="catalogo-card-stock">Stock: {prod.stock}</p>
                   </div>
-                  <button onClick={() => agregar(prod)} className="catalogo-card-btn" aria-label={`Agregar ${prod.nombre} al carrito`}>
-                    Añadir al carrito
+                  <button
+                    onClick={() => prod.stock > 0 && agregar(prod)}
+                    className={`catalogo-card-btn ${prod.stock <= 0 ? "catalogo-card-agotado" : ""}`}
+                    disabled={prod.stock <= 0}
+                    aria-label={prod.stock > 0 ? `Agregar ${prod.nombre} al carrito` : `${prod.nombre} agotado`}
+                  >
+                    {prod.stock > 0 ? "Añadir al carrito" : "Agotado"}
                   </button>
                 </div>
               ))

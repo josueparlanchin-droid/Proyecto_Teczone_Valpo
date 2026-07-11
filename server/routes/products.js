@@ -21,7 +21,7 @@ const router = Router();
  *         name: categoria
  *         schema:
  *           type: string
- *           enum: [Computadoras, Teclados, Mouse, Audio, Componentes, Accesorios, Monitores]
+ *           enum: [Computadoras, Teclados, Mouse, Componentes, Monitores, Audio, Accesorios, Smartphones, Wearables, Audifonos, Cargadores]
  *         description: Filtrar por categoría
  *       - in: query
  *         name: page
@@ -144,7 +144,7 @@ router.get("/:id", async (req, res) => {
  *                 example: "$200.000"
  *               categoria:
  *                 type: string
- *                 enum: [Computadoras, Teclados, Mouse, Audio, Componentes, Accesorios, Monitores]
+ *                 enum: [Computadoras, Teclados, Mouse, Componentes, Monitores, Audio, Accesorios, Smartphones, Wearables, Audifonos, Cargadores]
  *               descripcion:
  *                 type: string
  *               imagen:
