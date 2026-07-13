@@ -5,16 +5,17 @@ const menus = {
   administrador: [
     { label: "Catálogo", path: "/catalogo" },
     { label: "Gestionar Productos", path: "/gestion-productos" },
+    { label: "Gestionar Pedidos", path: "/gestion-pedidos" },
     { label: "Usuarios", path: "/usuarios" },
   ],
   botiquero: [
     { label: "Catálogo", path: "/catalogo" },
-    { label: "Agregar Producto", path: "/gestion-productos" },
-    { label: "Mis Compras", path: "/mis-pedidos" },
+    { label: "Gestionar Productos", path: "/gestion-productos" },
+    { label: "Gestionar Pedidos", path: "/gestion-pedidos" },
   ],
   cliente: [
     { label: "Catálogo", path: "/catalogo" },
-    { label: "Mis Compras", path: "/mis-pedidos" },
+    { label: "Mis Pedidos", path: "/mis-pedidos" },
   ],
   visita: [
     { label: "Catálogo", path: "/catalogo" },

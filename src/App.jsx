@@ -5,6 +5,7 @@ import Login from "./pages/Login.jsx";
 import Catalogo from "./pages/Catalogo.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import GestionProductos from "./pages/GestionProductos.jsx";
+import GestionPedidos from "./pages/GestionPedidos.jsx";
 import Carrito from "./pages/Carrito.jsx";
 import Checkout from "./pages/Checkout.jsx";
 import PedidoConfirmado from "./pages/PedidoConfirmado.jsx";
@@ -25,6 +26,7 @@ function App() {
         <Route path="/mis-pedidos" element={<ProtectedRoute><MisPedidos /></ProtectedRoute>} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/gestion-productos" element={<ProtectedRoute><GestionProductos /></ProtectedRoute>} />
+        <Route path="/gestion-pedidos" element={<ProtectedRoute><GestionPedidos /></ProtectedRoute>} />
         <Route path="/usuarios" element={<ProtectedRoute><Usuarios /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>

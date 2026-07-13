@@ -151,7 +151,7 @@ router.get("/mis", verificarToken, async (req, res) => {
  *   get:
  *     tags: [Pedidos]
  *     summary: Listar todos los pedidos
- *     description: Retorna todos los pedidos del sistema. Solo administradores.
+ *     description: Retorna todos los pedidos del sistema. Solo administradores y botiqueros.
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -165,9 +165,9 @@ router.get("/mis", verificarToken, async (req, res) => {
  *       200:
  *         description: Lista de todos los pedidos
  *       403:
- *         description: No tiene permisos de administrador
+ *         description: No tiene permisos suficientes
  */
-router.get("/admin", verificarToken, autorizar("administrador"), async (req, res) => {
+router.get("/admin", verificarToken, autorizar("administrador", "botiquero"), async (req, res) => {
   try {
     const { estado } = req.query;
     const filtro = {};
@@ -228,7 +228,7 @@ router.get("/:id", verificarToken, async (req, res) => {
  *   patch:
  *     tags: [Pedidos]
  *     summary: Cambiar estado de un pedido
- *     description: Actualiza el estado de un pedido. Solo administradores.
+ *     description: Actualiza el estado de un pedido. Solo administradores y botiqueros.
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -256,7 +256,7 @@ router.get("/:id", verificarToken, async (req, res) => {
  *       404:
  *         description: Pedido no encontrado
  */
-router.patch("/:id/estado", verificarToken, autorizar("administrador"), async (req, res) => {
+router.patch("/:id/estado", verificarToken, autorizar("administrador", "botiquero"), async (req, res) => {
   try {
     const { estado } = req.body;
     const estados = ["pendiente", "pagado", "enviado", "entregado", "cancelado"];
