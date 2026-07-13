@@ -38,7 +38,7 @@ const options = {
             nombre: { type: "string", description: "Nombre" },
             apellido: { type: "string", description: "Apellido" },
             correo: { type: "string", format: "email", description: "Correo electrónico" },
-            rol: { type: "string", enum: ["visita", "cliente", "botiquero", "administrador"], description: "Rol del usuario" },
+            rol: { type: "string", enum: ["visita", "cliente", "vendedor", "administrador"], description: "Rol del usuario" },
             activo: { type: "boolean", description: "Estado del usuario" },
             createdAt: { type: "string", format: "date-time" },
             updatedAt: { type: "string", format: "date-time" },

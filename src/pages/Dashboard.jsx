@@ -8,7 +8,7 @@ const menus = {
     { label: "Gestionar Pedidos", path: "/gestion-pedidos" },
     { label: "Usuarios", path: "/usuarios" },
   ],
-  botiquero: [
+  vendedor: [
     { label: "Catálogo", path: "/catalogo" },
     { label: "Gestionar Productos", path: "/gestion-productos" },
     { label: "Gestionar Pedidos", path: "/gestion-pedidos" },

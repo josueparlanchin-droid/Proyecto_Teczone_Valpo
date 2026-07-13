@@ -3,7 +3,7 @@ import User from "../models/User.js";
 import { verificarToken, autorizar } from "../middleware/auth.js";
 
 const router = Router();
-const rolesPermitidos = ["visita", "cliente", "botiquero", "administrador"];
+const rolesPermitidos = ["visita", "cliente", "vendedor", "administrador"];
 
 /**
  * @swagger
@@ -59,7 +59,7 @@ router.get("/", verificarToken, autorizar("administrador"), async (req, res) => 
  *             properties:
  *               rol:
  *                 type: string
- *                 enum: [visita, cliente, botiquero, administrador]
+ *                 enum: [visita, cliente, vendedor, administrador]
  *     responses:
  *       200:
  *         description: Rol actualizado

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-const roles = ["visita", "cliente", "botiquero", "administrador"];
+const roles = ["visita", "cliente", "vendedor", "administrador"];
 
 const userSchema = new mongoose.Schema({
   nombre: { type: String, default: "" },

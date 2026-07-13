@@ -37,6 +37,16 @@ function MisPedidos() {
     setExpandido(expandido === id ? null : id);
   };
 
+  const cancelarPedido = async (id) => {
+    if (!confirm("¿Estás seguro de cancelar este pedido? Se devolverá el stock.")) return;
+    try {
+      await api.patch(`/pedidos/${id}/cancelar`);
+      cargarPedidos();
+    } catch (err) {
+      console.error("Error al cancelar pedido:", err);
+    }
+  };
+
   const fecha = (dateStr) => {
     return new Date(dateStr).toLocaleDateString("es-CL", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
   };
@@ -103,6 +113,17 @@ function MisPedidos() {
                         </div>
                       ))}
                     </div>
+
+                    {pedido.estado === "pendiente" && (
+                      <div className="pedidos-cancelar">
+                        <button
+                          className="pedidos-btn-cancelar"
+                          onClick={() => cancelarPedido(pedido._id)}
+                        >
+                          Cancelar pedido
+                        </button>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

@@ -27,7 +27,7 @@ app.get("/", (_req, res) => {
       "GET  /api/perfil",
       "GET  /api/productos",
       "GET  /api/productos/:id",
-      "POST /api/productos (botiquero/admin)",
+      "POST /api/productos (vendedor/admin)",
       "PUT  /api/productos/:id (admin)",
       "DELETE /api/productos/:id (admin soft delete)",
       "GET  /api/productos/admin (admin)",

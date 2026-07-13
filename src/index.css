@@ -1526,6 +1526,28 @@ body, html {
   color: #334155;
 }
 
+.pedidos-cancelar {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.pedidos-btn-cancelar {
+  padding: 8px 20px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.pedidos-btn-cancelar:hover {
+  background-color: #dc2626;
+}
+
 /* ========================================
    PROFILE MENU (Dropdown)
    ======================================== */

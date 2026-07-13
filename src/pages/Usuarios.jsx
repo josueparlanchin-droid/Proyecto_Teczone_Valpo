@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios.js";
 
-const roles = ["visita", "cliente", "botiquero", "administrador"];
+const roles = ["visita", "cliente", "vendedor", "administrador"];
 
 function Usuarios() {
   const navegar = useNavigate();
@@ -60,7 +60,7 @@ function Usuarios() {
   const colorRol = (rol) => {
     const colores = {
       administrador: "#ef4444",
-      botiquero: "#f59e0b",
+      vendedor: "#f59e0b",
       cliente: "#4ade80",
       visita: "#94a3b8",
     };

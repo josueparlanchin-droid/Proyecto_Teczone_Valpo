@@ -125,7 +125,7 @@ router.get("/:id", async (req, res) => {
  *   post:
  *     tags: [Productos]
  *     summary: Crear un producto
- *     description: Agrega un nuevo producto al catálogo. Requiere rol botiquero o administrador.
+ *     description: Agrega un nuevo producto al catálogo. Requiere rol vendedor o administrador.
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -160,7 +160,7 @@ router.get("/:id", async (req, res) => {
  *       403:
  *         description: No tiene permisos
  */
-router.post("/", verificarToken, autorizar("botiquero", "administrador"), async (req, res) => {
+router.post("/", verificarToken, autorizar("vendedor", "administrador"), async (req, res) => {
   try {
     const { nombre, precio, categoria, descripcion, stock } = req.body;
     if (!nombre || !precio || !categoria) {

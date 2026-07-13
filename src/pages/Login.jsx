@@ -15,7 +15,7 @@ function Login() {
       localStorage.setItem("refreshToken", data.refreshToken);
       localStorage.setItem("usuario", JSON.stringify(data.usuario));
 
-      if (data.usuario.rol === "administrador" || data.usuario.rol === "botiquero") {
+      if (data.usuario.rol === "administrador" || data.usuario.rol === "vendedor") {
         navegar("/dashboard");
       } else {
         navegar("/catalogo");

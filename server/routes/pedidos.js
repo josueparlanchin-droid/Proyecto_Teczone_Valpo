@@ -151,7 +151,7 @@ router.get("/mis", verificarToken, async (req, res) => {
  *   get:
  *     tags: [Pedidos]
  *     summary: Listar todos los pedidos
- *     description: Retorna todos los pedidos del sistema. Solo administradores y botiqueros.
+ *     description: Retorna todos los pedidos del sistema. Solo administradores y vendedores.
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -167,7 +167,7 @@ router.get("/mis", verificarToken, async (req, res) => {
  *       403:
  *         description: No tiene permisos suficientes
  */
-router.get("/admin", verificarToken, autorizar("administrador", "botiquero"), async (req, res) => {
+router.get("/admin", verificarToken, autorizar("administrador", "vendedor"), async (req, res) => {
   try {
     const { estado } = req.query;
     const filtro = {};
@@ -228,7 +228,7 @@ router.get("/:id", verificarToken, async (req, res) => {
  *   patch:
  *     tags: [Pedidos]
  *     summary: Cambiar estado de un pedido
- *     description: Actualiza el estado de un pedido. Solo administradores y botiqueros.
+ *     description: Actualiza el estado de un pedido. Solo administradores y vendedores.
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -256,7 +256,7 @@ router.get("/:id", verificarToken, async (req, res) => {
  *       404:
  *         description: Pedido no encontrado
  */
-router.patch("/:id/estado", verificarToken, autorizar("administrador", "botiquero"), async (req, res) => {
+router.patch("/:id/estado", verificarToken, autorizar("administrador", "vendedor"), async (req, res) => {
   try {
     const { estado } = req.body;
     const estados = ["pendiente", "pagado", "enviado", "entregado", "cancelado"];
@@ -277,6 +277,59 @@ router.patch("/:id/estado", verificarToken, autorizar("administrador", "botiquer
     res.json({ mensaje: `Estado actualizado a "${estado}"`, pedido });
   } catch (error) {
     res.status(500).json({ mensaje: "Error al actualizar estado", error: error.message });
+  }
+});
+
+/**
+ * @swagger
+ * /api/pedidos/{id}/cancelar:
+ *   patch:
+ *     tags: [Pedidos]
+ *     summary: Cancelar un pedido (cliente)
+ *     description: Permite al cliente cancelar su propio pedido si está en estado pendiente. Restaura el stock y desactiva el pedido.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Pedido cancelado exitosamente
+ *       400:
+ *         description: El pedido no está en estado pendiente
+ *       403:
+ *         description: No es tu pedido
+ *       404:
+ *         description: Pedido no encontrado
+ */
+router.patch("/:id/cancelar", verificarToken, async (req, res) => {
+  try {
+    const pedido = await Order.findById(req.params.id);
+    if (!pedido || !pedido.activo) {
+      return res.status(404).json({ mensaje: "Pedido no encontrado" });
+    }
+
+    if (pedido.usuario.toString() !== req.usuario.id) {
+      return res.status(403).json({ mensaje: "No tienes acceso a este pedido" });
+    }
+
+    if (pedido.estado !== "pendiente") {
+      return res.status(400).json({ mensaje: "Solo se pueden cancelar pedidos en estado pendiente" });
+    }
+
+    for (const item of pedido.items) {
+      await Product.findByIdAndUpdate(item.producto, { $inc: { stock: item.cantidad } });
+    }
+
+    pedido.activo = false;
+    await pedido.save();
+
+    res.json({ mensaje: "Pedido cancelado exitosamente" });
+  } catch (error) {
+    res.status(500).json({ mensaje: "Error al cancelar pedido", error: error.message });
   }
 });
 
